@@ -2,12 +2,14 @@ export const NOTE_NAMES = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B']
 export const NOTE_NAMES_FLAT = ['C','Db','D','Eb','E','F','Gb','G','Ab','A','Bb','B'];
 
 // Standard 4-string bass: low E, A, D, G
-// Open string indices: E=4, A=9, D=2, G=7
 export const OPEN_STRINGS = [4, 9, 2, 7];
-export const STRING_NAMES = ['G','D','A','E']; // top to bottom in display
+export const NUM_STRINGS = 4;
+
+// Standard 6-string guitar: low E, A, D, G, B, E
+export const GUITAR_OPEN_STRINGS = [4, 9, 2, 7, 11, 4];
+export const GUITAR_NUM_STRINGS = 6;
 
 export const NUM_FRETS = 24;
-export const NUM_STRINGS = 4;
 
 export const SCALES: Record<string, number[]> = {
   'Major':             [0,2,4,5,7,9,11],
@@ -37,7 +39,7 @@ export const DEGREE_COLOR = [
   '#43A8E0', // 5
   '#5C5FD5', // b6
   '#9555D6', // 6
-  '#BB15E2', // b7
+  '#B54DD2', // b7
   '#E6579E', // 7
 ];
 
@@ -52,9 +54,8 @@ export const ROMAN = ['I','II','III','IV','V','VI','VII'];
 export const MARKERS = [3,5,7,9,12,15,17,19,21,24];
 export const DOUBLE_MARKERS = new Set([12,24]);
 
-export function noteAt(displayString: number, fret: number): number {
-  // displayString 0 = high G (top), 3 = low E (bottom)
-  const openIdx = OPEN_STRINGS[NUM_STRINGS - 1 - displayString];
+export function noteAt(displayString: number, fret: number, openStrings = OPEN_STRINGS, numStrings = NUM_STRINGS): number {
+  const openIdx = openStrings[numStrings - 1 - displayString];
   return ((openIdx + fret) % 12 + 12) % 12;
 }
 
