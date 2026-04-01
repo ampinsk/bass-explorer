@@ -123,7 +123,6 @@ export default function BassExplorer() {
   function selectKey(note: number) {
     setSelectedRoot(note);
     setActiveChordIdx(null);
-    setVisibleDegrees(new Set(SCALES[selectedScale]));
     setUseFlats(FLAT_ROOTS.has(note));
   }
 
