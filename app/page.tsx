@@ -237,7 +237,7 @@ export default function BassExplorer() {
                 return (
                   <g key={`${s}-${f}`} className="fret-dot" style={{ cursor: 'pointer' }} onClick={() => selectKey(note)}>
                     <circle cx={cx} cy={cy} r={dotR} fill={fill} />
-                    <text x={cx} y={cy + 4} textAnchor="middle" fontSize={12} fontFamily="var(--font-inter), system-ui, sans-serif" fill={textFill} pointerEvents="none">
+                    <text x={cx} y={cy + 5} textAnchor="middle" fontSize={14} fontWeight={400} fontFamily="var(--font-geist-mono), monospace" fill={textFill} pointerEvents="none">
                       {label}
                     </text>
                   </g>
@@ -249,7 +249,7 @@ export default function BassExplorer() {
       </div>
 
       {/* ── Controls ──────────────────────────────────────────────────────── */}
-      <div className="controls" style={{ background: '#131110', padding: '40px 48px', display: 'flex', flexDirection: 'column', gap: 24,  }}>
+      <div className="controls" style={{ background: '#131110', padding: '40px 48px 64px', display: 'flex', flexDirection: 'column', gap: 24,  }}>
 
           {/* Title — outside panels */}
           <span style={{ fontFamily: INTER, fontSize: 14, fontWeight: 400, color: '#B1B1B1', letterSpacing: '-0.01em', lineHeight: '18px' }}>
@@ -257,7 +257,7 @@ export default function BassExplorer() {
           </span>
 
           {/* Panels row */}
-          <div style={{ display: 'flex', gap: 24, alignItems: 'flex-start'}}>
+          <div style={{ display: 'flex', gap: 24, alignItems: 'stretch'}}>
 
             {/* Left: view as + show */}
             <div style={{ ...PANEL, flex: '0 0 426px' }}>
@@ -334,13 +334,14 @@ export default function BassExplorer() {
                 fontFamily: INTER, fontSize: 12, color: '#646464',
                 cursor: 'pointer', padding: 0, textAlign: 'left' as const,
                 textDecoration: 'underline', textDecorationThickness: '1px',
+                marginTop: 'auto',
               }}>
                 {showMore ? 'Less' : 'More'}
               </button>
             </div>
 
             {/* Right: progression */}
-            <div style={{ ...PANEL, flex: 1 }}>
+            <div style={{ ...PANEL, flex: 1, overflow: 'hidden' }}>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
                 <span style={LABEL}>Chords</span>
                 <input
@@ -360,17 +361,20 @@ export default function BassExplorer() {
               </div>
 
               {progression.length > 0 && (
-                <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap' }}>
-                  {progression.map((chord, i) => (
-                    <div key={i} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 5 }}>
-                      <button style={pill(i === activeChordIdx)} onClick={() => selectChord(i)}>
-                        {chord.name}
-                      </button>
-                      <span style={{ fontFamily: INTER, fontSize: 14, color: '#6A6A6A', lineHeight: '18px', letterSpacing: '-0.02em' }}>
-                        {chordRoman(chord.name, chord.root, selectedRoot, selectedScale)}
-                      </span>
-                    </div>
-                  ))}
+                <div style={{ position: 'relative' }}>
+                  <div className="chord-scroll" style={{ display: 'flex', gap: 16, flexWrap: 'nowrap', overflowX: 'auto' }}>
+                    {progression.map((chord, i) => (
+                      <div key={i} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 5 }}>
+                        <button style={pill(i === activeChordIdx)} onClick={() => selectChord(i)}>
+                          {chord.name}
+                        </button>
+                        <span style={{ fontFamily: INTER, fontSize: 14, color: '#6A6A6A', lineHeight: '18px', letterSpacing: '-0.02em' }}>
+                          {chordRoman(chord.name, chord.root, selectedRoot, selectedScale)}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                  <div style={{ position: 'absolute', top: 0, right: 0, bottom: 0, width: 48, background: 'linear-gradient(to right, transparent, #1e1c1b)', pointerEvents: 'none' }} />
                 </div>
               )}
             </div>
