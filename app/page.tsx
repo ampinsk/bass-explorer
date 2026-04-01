@@ -250,7 +250,7 @@ export default function BassExplorer() {
       </div>
 
       {/* ── Controls ──────────────────────────────────────────────────────── */}
-      <div className="controls" style={{ background: '#131110', padding: '40px 48px', display: 'flex', flexDirection: 'column', gap: 24, minHeight: 415 }}>
+      <div className="controls" style={{ background: '#131110', padding: '40px 48px', display: 'flex', flexDirection: 'column', gap: 24,  }}>
 
           {/* Title — outside panels */}
           <span style={{ fontFamily: INTER, fontSize: 14, fontWeight: 400, color: '#B1B1B1', letterSpacing: '-0.01em', lineHeight: '18px' }}>
@@ -297,48 +297,36 @@ export default function BassExplorer() {
             </div>
 
             {/* Middle: key + scale */}
-            <div style={{ ...PANEL, flex: '0 0 318px' }}>
+            <div style={{ ...PANEL, flex: '0 0 auto' }}>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
                 <span style={LABEL}>Key</span>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
-                  <div style={{ display: 'flex', gap: 4, flexWrap: 'wrap' }}>
-                    {NATURAL_NOTES.map(i => (
-                      <button key={i} style={pill(i === selectedRoot)} onClick={() => selectKey(i)}>
-                        {noteNames[i]}
-                      </button>
-                    ))}
-                  </div>
-                  {showMore && (
-                    <div style={{ display: 'flex', gap: 4, flexWrap: 'wrap' }}>
-                      {SHARP_NOTES.map(i => (
-                        <button key={i} style={pill(i === selectedRoot)} onClick={() => selectKey(i)}>
-                          {noteNames[i]}
-                        </button>
-                      ))}
-                    </div>
-                  )}
+                <div style={{ display: 'flex', gap: 4 }}>
+                  {NATURAL_NOTES.map(i => (
+                    <button key={i} style={pill(i === selectedRoot)} onClick={() => selectKey(i)}>
+                      {noteNames[i]}
+                    </button>
+                  ))}
+                  {SHARP_NOTES.map(i => (
+                    <button key={i} style={{ ...pill(i === selectedRoot), maxWidth: showMore ? 60 : 0, padding: showMore ? '4px 8px' : '4px 0', overflow: 'hidden', opacity: showMore ? (i === selectedRoot ? 1 : 0.4) : 0, pointerEvents: showMore ? 'auto' : 'none', transition: 'max-width 0.2s ease-out, padding 0.2s ease-out, opacity 0.2s ease-out, background 0.15s ease' }} onClick={() => selectKey(i)}>
+                      {noteNames[i]}
+                    </button>
+                  ))}
                 </div>
               </div>
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
                 <span style={LABEL}>Scale</span>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
-                  <div style={{ display: 'flex', gap: 4, flexWrap: 'wrap' }}>
-                    {PRIMARY_SCALES.map(name => (
-                      <button key={name} style={pill(name === selectedScale)} onClick={() => selectScale(name)}>
-                        {scaleLabel(name)}
-                      </button>
-                    ))}
-                  </div>
-                  {showMore && (
-                    <div style={{ display: 'flex', gap: 4, flexWrap: 'wrap' }}>
-                      {MORE_SCALES.map(name => (
-                        <button key={name} style={pill(name === selectedScale)} onClick={() => selectScale(name)}>
-                          {scaleLabel(name)}
-                        </button>
-                      ))}
-                    </div>
-                  )}
+                <div style={{ display: 'flex', gap: 4, flexWrap: 'wrap' }}>
+                  {PRIMARY_SCALES.map(name => (
+                    <button key={name} style={pill(name === selectedScale)} onClick={() => selectScale(name)}>
+                      {scaleLabel(name)}
+                    </button>
+                  ))}
+                  {MORE_SCALES.map(name => (
+                    <button key={name} style={{ ...pill(name === selectedScale), maxWidth: showMore ? 120 : 0, padding: showMore ? '4px 8px' : '4px 0', overflow: 'hidden', opacity: showMore ? (name === selectedScale ? 1 : 0.4) : 0, pointerEvents: showMore ? 'auto' : 'none', transition: 'max-width 0.2s ease-out, padding 0.2s ease-out, opacity 0.2s ease-out, background 0.15s ease' }} onClick={() => selectScale(name)}>
+                      {scaleLabel(name)}
+                    </button>
+                  ))}
                 </div>
               </div>
 
